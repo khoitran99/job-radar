@@ -21,3 +21,6 @@ packages/db/prisma/migrations/dev.db*
 packages/db/src/generated
 .tsbuildinfo
 *.tsbuildinfo
+
+# Compiled package output
+packages/*/dist

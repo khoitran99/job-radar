@@ -13,7 +13,9 @@ services:
       POSTGRES_PASSWORD: jobradar
       POSTGRES_DB: jobradar
     ports:
-      - "5432:5432"
+      # Host port is 5433 to avoid colliding with a local Homebrew Postgres on 5432.
+      # The container still listens on 5432 internally — only the host mapping differs.
+      - "5433:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:

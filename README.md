@@ -60,7 +60,7 @@ pnpm infra:up
 pnpm db:generate
 
 # 5. (one time) create the initial migration for the stub model
-pnpm db:migrate -- --name phase0_init
+pnpm db:migrate --name phase0_init
 
 # 6. start every app in parallel
 pnpm dev
@@ -78,6 +78,9 @@ pnpm dev
 | Scheduler readiness | http://localhost:3002/health/ready |
 | Web SPA | http://localhost:5173 |
 | RabbitMQ management UI | http://localhost:15672 (jobradar / jobradar) |
+| Postgres (host port) | `psql -h localhost -p 5433 -U jobradar -d jobradar` |
+
+> **Port note**: Postgres is on host port **5433** (not 5432) to avoid conflicting with a local Homebrew/Postgres.app install. The container internally still uses 5432.
 
 A successful Phase 0 looks like:
 - All `/health/ready` endpoints return `{"status":"ok"}` with each downstream marked `"ok"`.

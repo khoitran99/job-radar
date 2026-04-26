@@ -7,17 +7,23 @@
     "node": ">=20.10.0"
   },
   "scripts": {
+    "start": "./scripts/start.sh",
+    "stop": "./scripts/stop.sh",
     "infra:up": "docker compose -f infra/docker-compose.yml up -d",
     "infra:down": "docker compose -f infra/docker-compose.yml down",
     "infra:logs": "docker compose -f infra/docker-compose.yml logs -f",
-    "infra:reset": "docker compose -f infra/docker-compose.yml down -v",
-    "dev": "pnpm -r --parallel --filter \"./apps/*\" run dev",
-    "build": "pnpm -r run build",
+    "infra:reset": "./scripts/stop.sh --reset",
+    "packages:build": "pnpm -r --filter \"./packages/*\" run build",
+    "packages:clean": "pnpm -r --filter \"./packages/*\" run clean",
+    "dev": "pnpm packages:build && pnpm -r --parallel --filter \"./apps/*\" --filter \"./packages/*\" run dev",
+    "build": "pnpm packages:build && pnpm -r --filter \"./apps/*\" run build",
     "typecheck": "pnpm -r run typecheck",
-    "db:generate": "pnpm --filter @jobradar/db prisma generate",
-    "db:migrate": "pnpm --filter @jobradar/db prisma migrate dev"
+    "db:generate": "dotenv -e .env -- pnpm --filter @jobradar/db prisma generate",
+    "db:migrate": "dotenv -e .env -- pnpm --filter @jobradar/db prisma migrate dev",
+    "db:studio": "dotenv -e .env -- pnpm --filter @jobradar/db prisma studio"
   },
   "devDependencies": {
+    "dotenv-cli": "7.4.2",
     "typescript": "5.5.4"
   }
 }
