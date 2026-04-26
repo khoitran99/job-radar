@@ -1,0 +1,14 @@
+// Phase 0: stub schema. Real models (User, Source, Posting, etc.) land in Phase 1.
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model HealthProbe {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+}
